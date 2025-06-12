@@ -1,0 +1,32 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "This is Namaste React",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rasika-khapate/Namaste-React.git"
+  },
+  "keywords": [
+    "react",
+    "parcel"
+  ],
+  "author": "Rasika Khapate",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rasika-khapate/Namaste-React/issues"
+  },
+  "homepage": "https://github.com/rasika-khapate/Namaste-React#readme",
+  "devDependencies": {
+    "parcel": "^2.15.2"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "browsersLists" : {
+
+  }
+}
