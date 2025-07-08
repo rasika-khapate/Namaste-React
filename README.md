@@ -20,7 +20,7 @@ Tree Shaking
 
 
 
-# My question - 
+# 1.My question - 
 
 const handleFilteredRestaurants = () => {
     const filteredList = ListOfRestaurants.filter((res) => res.avgRating);
@@ -62,3 +62,87 @@ Minimal DOM diffing happens — React may do nothing to the actual DOM
 
 Scenario	                                                     Will React re-render?	   Will DOM change?
 setListOfRestaurants with a new array (even if contents same)	✅ Yes (because new array reference)	❌ No (because same keys, same component output)
+
+===========================================================================================================================================
+
+# 2. My question - dont remember
+
+
+# solution:
+
+ React's event loop here:
+
+ Event handler runs — button is clicked, handleFilteredRestaurants executes, filters list, and calls setListOfRestaurants.
+React schedules an update — but the component doesn’t re-render immediately within that function.
+ After the event handler completes, React processes state updates, and triggers a re-render of the component with the new state value.
+ Now, during render, your JSX:
+
+ {ListOfRestaurants.map((i) => (
+   <RestaurantCard key={i.id} resData={i} />
+ ))}
+
+ is evaluated using the new updated state value.
+
+ 🔍 Why doesn’t it "stop" at 5th line?
+ In React functional components:
+ State updates via useState are asynchronous
+ The function body (Body component function) is not "run again" immediately — it re-runs in the next render cycle after React completes its state reconciliation.
+
+ At runtime:
+
+ First render → initial state (resList)
+ User clicks → handleFilteredRestaurants filters, setListOfRestaurants(filteredList)
+ React schedules re-render
+ On next render:
+ ListOfRestaurants now holds filteredList
+
+ JSX re-evaluates
+
+ map generates new RestaurantCard components for the filtered list
+ React updates the DOM
+ 💡 Important principle:
+ React treats function components as render blueprints.
+ They aren't "live" functions waiting to be paused/resumed. Each time React renders, it invokes your function from the top, with the latest state values.
+
+ So handleFilteredRestaurants just schedules an update — the rendering happens separately afterward.
+
+===========================================================================================================================================
+
+ # 3. My question 
+
+const data = await fetch(url) , where url is a live api data, like a list of restaurants from swiggy
+const json = await data.json()
+
+my question is, why we write the second line of code, when the response of the live api data is indeed a json data?
+
+# solution
+
+# 1 
+➡ fetch(url) returns a Promise, not the actual data.
+Specifically, it returns a Promise that will resolve to a Response object when the HTTP request completes.
+
+That Response object contains meta-information about the response (like status, headers) and the body as a stream — it doesn't immediately give you the parsed JSON data.
+
+# 2
+➡ data.json() reads the body stream and parses it as JSON.
+Even though the API response is JSON — it's still a text stream until you explicitly parse it.
+
+The .json() method is an asynchronous operation (returns a Promise), because it has to read the entire response stream, convert it to text, then parse it as JSON.
+
+# 3
+Why doesn't fetch automatically give us the parsed JSON if the content is application/json?
+Because:
+
+The fetch API is generic — it doesn't assume how you want to handle the response body.
+
+You might want to read it as:
+
+.text() → if it’s plain text
+.blob() → for binary files
+.arrayBuffer() → for low-level binary streams
+.formData() → for form submissions
+.json() → for JSON
+
+So you choose how to parse the response body.
+
+
