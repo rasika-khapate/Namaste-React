@@ -18,7 +18,7 @@ Consistency Hashing Algorithm
 Zero Config
 Tree Shaking
 
-
+===========================================================================================================================================
 
 # 1.My question - 
 
@@ -144,5 +144,54 @@ You might want to read it as:
 .json() → for JSON
 
 So you choose how to parse the response body.
+
+===========================================================================================================================================
+
+# Difference between nullish coalescing and logical OR operator
+
+# Answer:
+
+Nullish Coalescing (??)
+👉 It provides a default value when the left-hand side is null or undefined.
+
+⚠️ Important: It’s different from the logical OR || operator, which considers any falsy value (like 0, '', false) as a reason to fallback.
+
+✅ Syntax:
+javascript
+Copy
+Edit
+let value = something ?? defaultValue;
+🔍 Example:
+javascript
+Copy
+Edit
+let userAge = 0;
+
+console.log(userAge || 25);  // 25 (since 0 is falsy)
+console.log(userAge ?? 25);  // 0 (since 0 is NOT null/undefined)
+
+let userName = null;
+console.log(userName ?? "Guest");  // "Guest"
+📌 Use Them Together:
+They often work nicely together when dealing with APIs or dynamic data.
+
+🔍 Example:
+javascript
+Copy
+Edit
+const user = {
+  profile: {
+    name: "Rasika"
+  }
+};
+
+let email = user.contact?.email ?? "Not Provided";
+console.log(email);  // "Not Provided"
+
+
+📌 Summary Table:
+Operator	Meaning	Example
+?.	Access property/method if not null/undefined	obj?.prop
+??	Return fallback only if value is null/undefined	value ?? fallback
 
 

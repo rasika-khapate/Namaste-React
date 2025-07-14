@@ -2,7 +2,7 @@ import { LOGO_URL } from "../utils/constant";
 
 const RestaurantCard = ({ resData }) => {
   const { cloudinaryImageId, name, cuisines, avgRating, sla, costForTwo } =
-    resData;
+    resData.info;
   // or sla : {deliveryTime} then use directly deliveryTime in span
   return (
     <>
