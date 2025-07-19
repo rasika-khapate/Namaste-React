@@ -195,3 +195,19 @@ Operator	Meaning	Example
 ??	Return fallback only if value is null/undefined	value ?? fallback
 
 
+
+      // const restaurantCard = mockData[0]?.data?.cards.find(
+      //   (card) => card?.card?.card?.id === "restaurant_grid_listing_v2"
+      // );  // TO DETERMINE WHICH INDEX OF CARD KEY CONTAINS DATA OF RESTAURANTS, AND THIS WILL BE COMMUNNICATED TO US VIA Backend
+
+      // const resList = restaurantCard?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+
+       // const timer = setTimeout(() => {
+    //   const resList =
+    //     mockData[0]?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+    //       ?.restaurants;}
+
+    // return () => clearTimeout(timer);
+
+

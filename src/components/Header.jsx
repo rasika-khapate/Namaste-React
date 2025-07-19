@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { CDN_URL } from "../utils/constant";
 
 export const Header = () => {
+  const [logButtonState, setLogButtonState] = useState(true);
+
+  const handleLogging = () => {
+    setLogButtonState(!logButtonState);
+  };
+
   return (
     <>
       <div className="header">
         <div className="logo-container">
-          <img
-            className="logo"
-            src={CDN_URL}
-          />
+          <img className="logo" src={CDN_URL} />
         </div>
         <div className="nav-main-div">
           <ul className="nav-items">
@@ -24,6 +28,11 @@ export const Header = () => {
             <li>
               <a href="#">Cart</a>
             </li>
+            <li>
+              <button onClick={handleLogging}>
+                {logButtonState ? "Login" : "Logout"}
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -31,4 +40,4 @@ export const Header = () => {
   );
 };
 
-export default Header
+export default Header;

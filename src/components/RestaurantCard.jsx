@@ -2,8 +2,8 @@ import { LOGO_URL } from "../utils/constant";
 
 const RestaurantCard = ({ resData }) => {
   const { cloudinaryImageId, name, cuisines, avgRating, sla, costForTwo } =
-    resData.info;
-  // or sla : {deliveryTime} then use directly deliveryTime in span
+    resData?.info;
+  // or sla : {slaString} then use directly deliveryTime in span
   return (
     <>
       <div className="res-card">
@@ -14,11 +14,9 @@ const RestaurantCard = ({ resData }) => {
         />
         <h3>{name}</h3>
         <h4>{cuisines.join(", ")}</h4>
-        <h4>
-          {avgRating}
-          <span>{sla.deliveryTime} min</span>
-        </h4>
+        <h4>{avgRating} stars</h4>
         <h4>{costForTwo}</h4>
+        <h4>{sla?.slaString}</h4>
       </div>
     </>
   );
