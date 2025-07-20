@@ -203,11 +203,148 @@ Operator	Meaning	Example
       // const resList = restaurantCard?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
 
-       // const timer = setTimeout(() => {
-    //   const resList =
-    //     mockData[0]?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
-    //       ?.restaurants;}
+===========================================================================================================================================
 
-    // return () => clearTimeout(timer);
+# What is useEffect, why are they called side effects??
+
+# Answer:
+
+👉  What is useEffect?
+ useEffect is a React Hook that lets you run side effects in function components.
+✅ It's used for:
+Fetching data from APIs 🛰️
+Subscribing to events 🖱️
+Setting up timers or intervals ⏲️
+Working with browser APIs like localStorage, document, etc.
+Updating the DOM manually (e.g., animations)
+
+How it Works
+Syntax	Behavior
+useEffect(fn)         	      Runs after every render
+useEffect(fn, [])           	Runs once after the first render (componentDidMount)
+useEffect(fn, [x])          	Runs when x changes (dependency array)
+return () => {...} inside it	Runs cleanup before component unmount or before the next effect runs
+
+
+
+👉 What Are "Side Effects"?
+In programming, a side effect is anything a function does beyond returning a value.
+
+✅ Pure Function
+A pure function:
+Takes inputs
+Returns an output
+Does nothing else
+
+js
+Copy
+Edit
+function add(a, b) {
+  return a + b; // ✅ no side effects
+}
+❌ Functions with Side Effects
+These functions affect the outside world, e.g.:
+
+js
+Copy
+Edit
+function logAndAdd(a, b) {
+  console.log("Adding...");   // ⚠️ side effect: console
+  document.title = "New Title"; // ⚠️ side effect: DOM
+  return a + b;
+}
+
+
+👉 Why is it called a "side effect"?
+In React, pure rendering means the component's render output is based only on its props and state.
+
+But things like:
+
+network calls,
+timeouts,
+subscriptions,
+...are "side effects" — they affect things outside the component and need useEffect to manage them properly.
+
+
+📦 Why Are They Called “Side” Effects?
+Because they are not the main point of the function — they are side activities.
+In React, rendering is supposed to be pure (just return JSX), so React provides useEffect() to isolate side effects from the render logic.
+
+🧼 Rendering in React = Following a Recipe
+When React renders a component:
+
+It reads props + state
+
+It returns JSX (just like a recipe returns a dish layout)
+
+There are no surprises: it’s pure, predictable, reproducible
+
+Just like:
+A recipe that says “2 cups of flour + 1 egg → mix → bake”
+
+Nothing magical happens on its own. You give it inputs, and you get a defined output.
+
+🔥 Side Effects = Real World Cooking Setup
+Now imagine you're actually cooking:
+
+You turn on the oven ✅
+
+You go shopping for ingredients ✅
+
+You set a timer so the cookies don’t burn ✅
+
+You update the fridge with leftovers ✅
+
+These things don’t directly change the recipe — but they’re necessary for the dish to succeed. They're actions that interact with the world.
+
+🧠 In React Terms:
+Cooking Step	React Equivalent
+Preheat the oven	useEffect(() => setupSomething(), [])
+Set a kitchen timer	setTimeout / setInterval
+Go grocery shopping	fetch() from API
+Store leftovers	localStorage.setItem()
+Clean up the kitchen	Cleanup inside return () => {...}
+
+You wouldn’t write in the ingredients section of the recipe:
+
+“Also, go to the store, call mom, and update your budget”
+
+That’d be confusing and inappropriate in a recipe.
+
+Likewise, you don’t put side effects in the return block of a component, because that’s meant for pure UI output.
+
+✅ Why It Matters in React:
+React rerenders components a lot.
+
+So if you did:
+
+js
+Copy
+Edit
+const Component = () => {
+  fetch("/api"); // 😱 Happens every render!
+  return <div>Hello</div>;
+};
+…it’d be like running to the grocery store every time you stir the soup 🍲😵
+
+Instead, React gives you:
+
+js
+Copy
+Edit
+useEffect(() => {
+  fetch("/api"); // ✅ only happens once
+}, []);
+This is like:
+
+"Before you start cooking, make sure you have ingredients and the oven’s hot."
+
+🧠 One-Liner Analogy Summary:
+Render is reading the recipe and plating the food.
+Side effects are the behind-the-scenes prep that make the recipe possible.
+
+You need both — but you keep them in different parts of the kitchen 👨‍🍳
+
+
 
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { CDN_URL } from "../utils/constant";
 
 export const Header = () => {
@@ -17,16 +18,16 @@ export const Header = () => {
         <div className="nav-main-div">
           <ul className="nav-items">
             <li>
-              <a href="#">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="#">About Us</a>
+              <Link to="/about">About Us</Link>
             </li>
             <li>
-              <a href="#">Contact Us</a>
+              <Link to="/contact">Contact Us</Link>
             </li>
             <li>
-              <a href="#">Cart</a>
+              <Link to="#">Cart</Link>
             </li>
             <li>
               <button onClick={handleLogging}>
