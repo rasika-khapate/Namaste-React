@@ -1,0 +1,308 @@
+{
+  "statusCode": 0,
+  "data": {
+    "statusMessage": "done successfully",
+    "cards": [
+      {
+        "card": {
+          "card": {
+            "@type": "type.googleapis.com/swiggy.gandalf.widgets.v2.TextBoxV2",
+            "text": "BOX8 - Desi Meals",
+            "headerStyling": {
+              "textColor": "text_Highest_Emphasis",
+              "textVariant": "header_H3_Black"
+            }
+          }
+        }
+      },
+      {
+        "card": {
+          "card": {
+            "@type": "type.googleapis.com/swiggy.gandalf.widgets.v2.RestaurantBlTab",
+            "tabs": [
+              {
+                "id": "Order Online",
+                "title": "Order Online"
+              },
+              {
+                "id": "Dineout",
+                "title": "Dineout",
+                "cta": "https://swiggy.com/menu/289269/dineout"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "card": {
+          "card": {
+            "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
+            "info": {
+              "id": "289269",
+              "name": "BOX8 - Desi Meals",
+              "city": "Bangalore",
+              "slugs": {
+                "restaurant": "box8-desi-meals-mathikere-yeshwanthpur",
+                "city": "bangalore"
+              },
+              "uniqueId": "e51e6528-4859-48c8-8fed-e84c17dc2d76",
+              "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/3/26/e945ef9c-4bb5-4838-91b7-7c3ee51f0820_289269.jpg",
+              "locality": "New BEL Road",
+              "areaName": "New BEL Road",
+              "costForTwo": "20000",
+              "costForTwoMessage": "₹200 for two",
+              "cuisines": ["North Indian", "Biryani"],
+              "avgRating": 4.6,
+              "feeDetails": {
+                "restaurantId": "289269",
+                "fees": [{}],
+                "icon": "v1648635511/Delivery_fee_new_cjxumu"
+              },
+              "parentId": "10655",
+              "avgRatingString": "4.6",
+              "totalRatingsString": "6.8K+ ratings",
+              "sla": {
+                "restaurantId": "289269",
+                "deliveryTime": 15,
+                "minDeliveryTime": 10,
+                "maxDeliveryTime": 20,
+                "lastMileTravel": 3,
+                "serviceability": "SERVICEABLE",
+                "rainMode": "RAIN_MODE_NONE",
+                "longDistance": "LONG_DISTANCE_NOT_LONG_DISTANCE",
+                "zoneId": 48,
+                "slaString": "10-20 MINS",
+                "lastMileTravelString": "3.0 km",
+                "iconType": "ICON_TYPE_EMPTY"
+              },
+              "availability": {
+                "nextCloseTime": "2025-07-25 02:00:00",
+                "visibility": true,
+                "opened": true,
+                "restaurantClosedMeta": {}
+              },
+              "aggregatedDiscountInfo": {
+                "header": "Get items under 100",
+                "shortDescriptionList": [
+                  {
+                    "meta": "Get items under 100",
+                    "discountType": "FinalPrice",
+                    "operationType": "RESTAURANT"
+                  },
+                  {
+                    "meta": "40% off | Use SWIGGYIT",
+                    "discountType": "Percentage",
+                    "operationType": "RESTAURANT"
+                  }
+                ],
+                "descriptionList": [
+                  {
+                    "meta": "Get items under 100",
+                    "discountType": "FinalPrice",
+                    "operationType": "RESTAURANT"
+                  },
+                  {
+                    "meta": "40% off up to ₹80 | Use code SWIGGYIT",
+                    "discountType": "Percentage",
+                    "operationType": "RESTAURANT"
+                  }
+                ],
+                "visible": true
+              },
+              "badges": {},
+              "slugString": "box8-desi-meals-mathikere-yeshwanthpur",
+              "isOpen": true,
+              "labels": [
+                {
+                  "title": "Timings",
+                  "message": "null"
+                },
+                {
+                  "title": "Address",
+                  "message": "#40,1st Floor,Above Punjab National Bank,New Bel Road,Msrit,M S R Nagar,R M V 2Nd Stage,Bangalore,Karnataka-560054"
+                },
+                {
+                  "title": "Cuisines",
+                  "message": "North Indian,Biryani"
+                }
+              ],
+              "logo": "Sumith_BLH/1000X1000%20-%20Ganesh%20Singh%20R.png",
+              "totalRatings": 6800,
+              "aggregatedDiscountInfoV2": {
+                "header": "Get items under 100",
+                "shortDescriptionList": [
+                  {
+                    "meta": "Get items under 100",
+                    "discountType": "FinalPrice",
+                    "operationType": "RESTAURANT"
+                  },
+                  {
+                    "meta": "40% off | Use SWIGGYIT",
+                    "discountType": "Percentage",
+                    "operationType": "RESTAURANT"
+                  }
+                ],
+                "descriptionList": [
+                  {
+                    "meta": "Get items under 100",
+                    "discountType": "FinalPrice",
+                    "operationType": "RESTAURANT"
+                  },
+                  {
+                    "meta": "40% off up to ₹80 | Use code SWIGGYIT",
+                    "discountType": "Percentage",
+                    "operationType": "RESTAURANT"
+                  }
+                ],
+                "couponDetailsCta": "View coupon details"
+              },
+              "type": "F",
+              "nudgeBanners": [
+                {
+                  "priority": 5,
+                  "discountInfo": {
+                    "discountType": "FinalPrice",
+                    "value": 219
+                  },
+                  "unlockedMessage": "Deal of the Day unlocked!",
+                  "minItemCount": 1,
+                  "maxItemCount": 1,
+                  "type": "SILD",
+                  "nudgeTagInfo": {
+                    "title": "Deal of the Day",
+                    "fontName": "FONT_NAME_CONDENSED_BOLD"
+                  },
+                  "logoCtx": {}
+                }
+              ],
+              "headerBanner": {
+                "url": "swiggy://webview?is_external=false&webview_url=https://www.swiggy.com/restaurant-info/289269"
+              },
+              "generalPurposeInfoListV2": [
+                {
+                  "cta": {
+                    "info": {
+                      "recordings": {}
+                    },
+                    "linkCta": {}
+                  }
+                }
+              ],
+              "loyaltyDiscoverPresentationInfo": {
+                "logoCtx": {
+                  "logo": "Swiggy%20One%20Lite/One_lite_Horizontal.png"
+                },
+                "freedelMessage": "Free delivery on orders above ₹199",
+                "badgeType": "BADGE_TYPE_ONE_LITE"
+              },
+              "ratingSlab": "RATING_SLAB_5",
+              "orderabilityCommunication": {
+                "title": {},
+                "subTitle": {},
+                "message": {},
+                "customIcon": {},
+                "commsStyling": {}
+              },
+              "hasBestsellerItems": true,
+              "hasGuiltfreeItems": true,
+              "cartOrderabilityNudgeBanner": {
+                "parameters": {},
+                "presentation": {}
+              },
+              "latLong": "13.029277,77.561334",
+              "backgroundImageOverlayInfo": {},
+              "featuredSectionInfo": {},
+              "dishStyle": {
+                "socialMarkerStyle": [
+                  {
+                    "socialMarkerType": "SOCIAL_MARKER_TYPE_HIGH_PROTEIN",
+                    "title": "Protein Rich",
+                    "textStyle": "FONT_NAME_V2_BODY3_NEUTRAL_BOLD",
+                    "textColor": "highlight"
+                  },
+                  {
+                    "socialMarkerType": "SOCIAL_MARKER_TYPE_BESTSELLER",
+                    "title": "Bestseller",
+                    "textStyle": "FONT_NAME_V2_BODY3_NEUTRAL_BOLD",
+                    "textColor": "color_swiggy_one"
+                  }
+                ]
+              }
+            },
+            "analytics": {}
+          },
+          "relevance": {
+            "type": "RELEVANCE_TYPE_CHECK_ORDERABILITY_ON_ITEM_ADD",
+            "sectionId": "POP_UP_CROUTON_MENU"
+          }
+        }
+      },
+      {
+        "groupedCard": {
+          "cardGroupMap": {
+            "REGULAR": {
+              "cards": [
+                {
+                  "card": {
+                    "card": {
+                      "@type": "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory",
+                      "title": "Recommended",
+                      "itemCards": [
+                        {
+                          "card": {
+                            "@type": "type.googleapis.com/swiggy.presentation.food.v2.Dish",
+                            "info": {
+                              "id": "88992264",
+                              "name": "Paneer Makhani Thali Meal",
+                              "category": "All-in-1 Thali Meals",
+                              "description": "Rich Punjabi Makhni curry with melt-in-the-mouth paneer + Dal Makhni/Chole/Dilli Rajma+ Paratha/Rice + Salad + Chutney + Dessert.",
+                              "imageId": "FOOD_CATALOG/IMAGES/CMS/2025/5/23/dbd5cff2-82a8-4151-ac6d-6a3e2003198d_58c14e95-1cb7-44c1-b27f-a928a5bab3d1.jpg",
+                              "inStock": 1,
+                              "isVeg": 1,
+                              "price": 29900,
+                              "finalPrice": 19900
+                            },
+
+                            "analytics": {},
+                            "hideRestaurantDetails": true
+                          }
+                        },
+
+                        {
+                          "card": {
+                            "@type": "type.googleapis.com/swiggy.presentation.food.v2.Dish",
+                            "info": {
+                              "id": "88992213",
+                              "name": "Butter Chicken Thali Meal",
+                              "category": "All-in-1 Thali Meals",
+                              "description": "Seriously delicious Butter Chicken + Dal Makhani/Chole/Dilli Rajma + Paratha/Rice + Salad + Chutney + Dessert.",
+                              "imageId": "FOOD_CATALOG/IMAGES/CMS/2025/5/23/f4805044-4682-4977-aa32-1b870f27fe6c_65c28805-2cfd-4e76-93a7-9342dba6f7c4.jpg",
+                              "inStock": 1,
+                              "price": 31900,
+                              "finalPrice": 21900
+                            },
+                            "analytics": {},
+                            "hideRestaurantDetails": true
+                          }
+                        }
+                      ],
+                      "type": "CATEGORY_TYPE_RECOMMENDED",
+                      "subtitleSuffix": {},
+                      "categoryId": "-1"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "firstOffsetRequest": true,
+    "isQCLink": false
+  },
+  "tid": "4bdccf7c-934f-4f8b-912e-14abe79d1950",
+  "sid": "lwme8bc3-e620-4201-a1de-b2a5591e2341",
+  "deviceId": "ae8f9ecc-0e44-e561-b760-81eb24d073bc",
+  "csrfToken": "gYlcXlavDykh-GGFm4uWDlh8P-KtUKZM1oS3bL9U"
+}

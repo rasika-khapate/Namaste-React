@@ -345,6 +345,30 @@ Side effects are the behind-the-scenes prep that make the recipe possible.
 
 You need both — but you keep them in different parts of the kitchen 👨‍🍳
 
+===========================================================================================================================================
+
+# is LINK from react-router-dom tag is actually anchor tag in html?
+
+# Solution
+✅ This is not a native HTML tag.
+✅ It is a React component provided by react-router-dom.
+✅ Internally, it renders an anchor (<a>) tag, but with enhanced behavior.
+
+⚙️ What Does Link Do?
+It prevents a full page reload (which a normal <a> would cause).
+Instead, it updates the URL and renders the matching route using React Router.
+It works with the React Router history stack to enable client-side navigation.
+
+🧠 Behind the Scenes
+This:
+
+<Link to="/about">About</Link>
+Will render:
+
+<a href="/about">About</a>
+But with JavaScript event handlers added to intercept clicks and trigger navigation without refreshing the page.
+
+
 
 
 

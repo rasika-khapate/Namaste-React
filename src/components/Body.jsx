@@ -3,6 +3,8 @@ import axios from "axios";
 // import mockData from "../utils/mockData.json";
 import RestaurantCard from "./RestaurantCard";
 import ShimmerUI from "./ShimmerUI";
+import { NAMASTEREACTSWIGGYAPI } from "../utils/constant";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOFRestaurants, setlistOFRestaurants] = useState([]);
@@ -17,9 +19,7 @@ const Body = () => {
   }, []);
 
   const fetchedRestaurants = async () => {
-    const data = await fetch(
-      "https://api.allorigins.win/raw?url=https://pastebin.com/raw/0QcdEDBL"
-    );
+    const data = await fetch(NAMASTEREACTSWIGGYAPI);
     const fetchedData = await data.json();
 
     const resList =
@@ -100,12 +100,17 @@ const Body = () => {
           Top‑Rated Restaurants
         </button>
       </div>
-
       <div className="res-container">
         {filteredRestaurantDisplay.map((i, index) => (
-          <RestaurantCard key={i.info.id ?? index} resData={i} />
+          <Link
+            to={"restaurant/" + i.info.id ?? index}
+            key={i.info.id ?? index}
+          >
+            <RestaurantCard resData={i} />{" "}
+          </Link>
         ))}
       </div>
+      ``
     </>
   );
 };
