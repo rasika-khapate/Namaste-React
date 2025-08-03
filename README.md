@@ -20,15 +20,14 @@ Tree Shaking
 
 ===========================================================================================================================================
 
-# 1.My question - 
+# 1.My question -
 
 const handleFilteredRestaurants = () => {
-    const filteredList = ListOfRestaurants.filter((res) => res.avgRating);
-    setListOfRestaurants(filteredList);
-  };
+const filteredList = ListOfRestaurants.filter((res) => res.avgRating);
+setListOfRestaurants(filteredList);
+};
 
 If this was the logic i had given for filter, would react still re render the UI? if yes why, if no why?
-
 
 # solution:
 
@@ -36,7 +35,7 @@ Will React re-render the UI?
 Yes — but with nuance.
 
 ✅ React will schedule a re-render because:
-setListOfRestaurants(filteredList) is called — and React’s useState  <b>doesn't shallow-compare </b>the previous state and the new state values by default.
+setListOfRestaurants(filteredList) is called — and React’s useState <b>doesn't shallow-compare </b>the previous state and the new state values by default.
 
 It only skips re-rendering if you use useMemo, useCallback, or React.memo optimizations or if the state update is skipped altogether because you didn't call setState.
 
@@ -60,55 +59,54 @@ Minimal DOM diffing happens — React may do nothing to the actual DOM
 
 💡 TL;DR:
 
-Scenario	                                                     Will React re-render?	   Will DOM change?
-setListOfRestaurants with a new array (even if contents same)	✅ Yes (because new array reference)	❌ No (because same keys, same component output)
+Scenario Will React re-render? Will DOM change?
+setListOfRestaurants with a new array (even if contents same) ✅ Yes (because new array reference) ❌ No (because same keys, same component output)
 
 ===========================================================================================================================================
 
 # 2. My question - dont remember
 
-
 # solution:
 
- React's event loop here:
+React's event loop here:
 
- Event handler runs — button is clicked, handleFilteredRestaurants executes, filters list, and calls setListOfRestaurants.
+Event handler runs — button is clicked, handleFilteredRestaurants executes, filters list, and calls setListOfRestaurants.
 React schedules an update — but the component doesn’t re-render immediately within that function.
- After the event handler completes, React processes state updates, and triggers a re-render of the component with the new state value.
- Now, during render, your JSX:
+After the event handler completes, React processes state updates, and triggers a re-render of the component with the new state value.
+Now, during render, your JSX:
 
- {ListOfRestaurants.map((i) => (
-   <RestaurantCard key={i.id} resData={i} />
- ))}
+{ListOfRestaurants.map((i) => (
+<RestaurantCard key={i.id} resData={i} />
+))}
 
- is evaluated using the new updated state value.
+is evaluated using the new updated state value.
 
- 🔍 Why doesn’t it "stop" at 5th line?
- In React functional components:
- State updates via useState are asynchronous
- The function body (Body component function) is not "run again" immediately — it re-runs in the next render cycle after React completes its state reconciliation.
+🔍 Why doesn’t it "stop" at 5th line?
+In React functional components:
+State updates via useState are asynchronous
+The function body (Body component function) is not "run again" immediately — it re-runs in the next render cycle after React completes its state reconciliation.
 
- At runtime:
+At runtime:
 
- First render → initial state (resList)
- User clicks → handleFilteredRestaurants filters, setListOfRestaurants(filteredList)
- React schedules re-render
- On next render:
- ListOfRestaurants now holds filteredList
+First render → initial state (resList)
+User clicks → handleFilteredRestaurants filters, setListOfRestaurants(filteredList)
+React schedules re-render
+On next render:
+ListOfRestaurants now holds filteredList
 
- JSX re-evaluates
+JSX re-evaluates
 
- map generates new RestaurantCard components for the filtered list
- React updates the DOM
- 💡 Important principle:
- React treats function components as render blueprints.
- They aren't "live" functions waiting to be paused/resumed. Each time React renders, it invokes your function from the top, with the latest state values.
+map generates new RestaurantCard components for the filtered list
+React updates the DOM
+💡 Important principle:
+React treats function components as render blueprints.
+They aren't "live" functions waiting to be paused/resumed. Each time React renders, it invokes your function from the top, with the latest state values.
 
- So handleFilteredRestaurants just schedules an update — the rendering happens separately afterward.
+So handleFilteredRestaurants just schedules an update — the rendering happens separately afterward.
 
 ===========================================================================================================================================
 
- # 3. My question 
+# 3. My question
 
 const data = await fetch(url) , where url is a live api data, like a list of restaurants from swiggy
 const json = await data.json()
@@ -117,19 +115,22 @@ my question is, why we write the second line of code, when the response of the l
 
 # solution
 
-# 1 
+# 1
+
 ➡ fetch(url) returns a Promise, not the actual data.
 Specifically, it returns a Promise that will resolve to a Response object when the HTTP request completes.
 
 That Response object contains meta-information about the response (like status, headers) and the body as a stream — it doesn't immediately give you the parsed JSON data.
 
 # 2
+
 ➡ data.json() reads the body stream and parses it as JSON.
 Even though the API response is JSON — it's still a text stream until you explicitly parse it.
 
 The .json() method is an asynchronous operation (returns a Promise), because it has to read the entire response stream, convert it to text, then parse it as JSON.
 
 # 3
+
 Why doesn't fetch automatically give us the parsed JSON if the content is application/json?
 Because:
 
@@ -167,11 +168,11 @@ Copy
 Edit
 let userAge = 0;
 
-console.log(userAge || 25);  // 25 (since 0 is falsy)
-console.log(userAge ?? 25);  // 0 (since 0 is NOT null/undefined)
+console.log(userAge || 25); // 25 (since 0 is falsy)
+console.log(userAge ?? 25); // 0 (since 0 is NOT null/undefined)
 
 let userName = null;
-console.log(userName ?? "Guest");  // "Guest"
+console.log(userName ?? "Guest"); // "Guest"
 📌 Use Them Together:
 They often work nicely together when dealing with APIs or dynamic data.
 
@@ -180,21 +181,18 @@ javascript
 Copy
 Edit
 const user = {
-  profile: {
-    name: "Rasika"
-  }
+profile: {
+name: "Rasika"
+}
 };
 
 let email = user.contact?.email ?? "Not Provided";
-console.log(email);  // "Not Provided"
-
+console.log(email); // "Not Provided"
 
 📌 Summary Table:
-Operator	Meaning	Example
-?.	Access property/method if not null/undefined	obj?.prop
-??	Return fallback only if value is null/undefined	value ?? fallback
-
-
+Operator Meaning Example
+?. Access property/method if not null/undefined obj?.prop
+?? Return fallback only if value is null/undefined value ?? fallback
 
       // const restaurantCard = mockData[0]?.data?.cards.find(
       //   (card) => card?.card?.card?.id === "restaurant_grid_listing_v2"
@@ -202,15 +200,14 @@ Operator	Meaning	Example
 
       // const resList = restaurantCard?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
-
 ===========================================================================================================================================
 
 # What is useEffect, why are they called side effects??
 
 # Answer:
 
-👉  What is useEffect?
- useEffect is a React Hook that lets you run side effects in function components.
+👉 What is useEffect?
+useEffect is a React Hook that lets you run side effects in function components.
 ✅ It's used for:
 Fetching data from APIs 🛰️
 Subscribing to events 🖱️
@@ -219,13 +216,11 @@ Working with browser APIs like localStorage, document, etc.
 Updating the DOM manually (e.g., animations)
 
 How it Works
-Syntax	Behavior
-useEffect(fn)         	      Runs after every render
-useEffect(fn, [])           	Runs once after the first render (componentDidMount)
-useEffect(fn, [x])          	Runs when x changes (dependency array)
-return () => {...} inside it	Runs cleanup before component unmount or before the next effect runs
-
-
+Syntax Behavior
+useEffect(fn) Runs after every render
+useEffect(fn, []) Runs once after the first render (componentDidMount)
+useEffect(fn, [x]) Runs when x changes (dependency array)
+return () => {...} inside it Runs cleanup before component unmount or before the next effect runs
 
 👉 What Are "Side Effects"?
 In programming, a side effect is anything a function does beyond returning a value.
@@ -240,7 +235,7 @@ js
 Copy
 Edit
 function add(a, b) {
-  return a + b; // ✅ no side effects
+return a + b; // ✅ no side effects
 }
 ❌ Functions with Side Effects
 These functions affect the outside world, e.g.:
@@ -249,11 +244,10 @@ js
 Copy
 Edit
 function logAndAdd(a, b) {
-  console.log("Adding...");   // ⚠️ side effect: console
-  document.title = "New Title"; // ⚠️ side effect: DOM
-  return a + b;
+console.log("Adding..."); // ⚠️ side effect: console
+document.title = "New Title"; // ⚠️ side effect: DOM
+return a + b;
 }
-
 
 👉 Why is it called a "side effect"?
 In React, pure rendering means the component's render output is based only on its props and state.
@@ -264,7 +258,6 @@ network calls,
 timeouts,
 subscriptions,
 ...are "side effects" — they affect things outside the component and need useEffect to manage them properly.
-
 
 📦 Why Are They Called “Side” Effects?
 Because they are not the main point of the function — they are side activities.
@@ -298,12 +291,12 @@ You update the fridge with leftovers ✅
 These things don’t directly change the recipe — but they’re necessary for the dish to succeed. They're actions that interact with the world.
 
 🧠 In React Terms:
-Cooking Step	React Equivalent
-Preheat the oven	useEffect(() => setupSomething(), [])
-Set a kitchen timer	setTimeout / setInterval
-Go grocery shopping	fetch() from API
-Store leftovers	localStorage.setItem()
-Clean up the kitchen	Cleanup inside return () => {...}
+Cooking Step React Equivalent
+Preheat the oven useEffect(() => setupSomething(), [])
+Set a kitchen timer setTimeout / setInterval
+Go grocery shopping fetch() from API
+Store leftovers localStorage.setItem()
+Clean up the kitchen Cleanup inside return () => {...}
 
 You wouldn’t write in the ingredients section of the recipe:
 
@@ -322,8 +315,8 @@ js
 Copy
 Edit
 const Component = () => {
-  fetch("/api"); // 😱 Happens every render!
-  return <div>Hello</div>;
+fetch("/api"); // 😱 Happens every render!
+return <div>Hello</div>;
 };
 …it’d be like running to the grocery store every time you stir the soup 🍲😵
 
@@ -333,7 +326,7 @@ js
 Copy
 Edit
 useEffect(() => {
-  fetch("/api"); // ✅ only happens once
+fetch("/api"); // ✅ only happens once
 }, []);
 This is like:
 
@@ -350,6 +343,7 @@ You need both — but you keep them in different parts of the kitchen 👨‍�
 # is LINK from react-router-dom tag is actually anchor tag in html?
 
 # Solution
+
 ✅ This is not a native HTML tag.
 ✅ It is a React component provided by react-router-dom.
 ✅ Internally, it renders an anchor (<a>) tag, but with enhanced behavior.
@@ -368,7 +362,326 @@ Will render:
 <a href="/about">About</a>
 But with JavaScript event handlers added to intercept clicks and trigger navigation without refreshing the page.
 
+===========================================================================================================================================
 
+# what is super keyword, why and when is it used?
 
+# Answer
 
+What is super?
+In JavaScript (and React), super is used to call the constructor or methods of the parent class.
 
+In React class components, the parent class is React.Component, so you use super() to make sure the parent’s constructor is properly called.
+
+🧠 Why is it used?
+When you create a constructor in a child class, you must call super(props) before accessing this. This is required by JavaScript when extending classes.
+
+📦 Example in a class component:
+import React, { Component } from "react";
+
+class Welcome extends Component {
+constructor(props) {
+super(props); // Calls the parent class's constructor
+
+    // Now you can safely use `this`
+    this.state = {
+      message: `Hello, ${this.props.name}`,
+    };
+
+}
+
+render() {
+return <h1>{this.state.message}</h1>;
+}
+}
+If you don’t call super(props), you’ll get an error like:
+
+Must call super constructor in derived class before accessing 'this'
+
+🔍 When is super used?
+Inside a constructor of a class that extends another class
+
+Before using this in that constructor
+
+To optionally pass props to the parent class (React.Component) so this.props is available
+
+🔁 Summary:
+Use Purpose
+super() Calls the parent class’s constructor
+super(props) Passes props to the parent so this.props is initialized
+Must be called In the constructor of a subclass before using this
+
+===========================================================================================================================================
+
+# \*super(name)- This must be called before using `this`\*\* — otherwise, JS throws an error.
+
+# why? whats the reason apart from the error?
+
+# Answer
+
+1.  JavaScript class inheritance (ES6+) is based on the super call to initialize "this".
+    In JavaScript, when you write a subclass like this:
+
+class Dog extends Animal {
+constructor(name) {
+super(name);
+this.name = name;
+}
+}
+JavaScript doesn’t automatically create the this context for Dog. Instead, the super() call is what creates and initializes the this binding by calling the parent constructor (Animal in this case).
+
+🧠 Without super(), there is no this yet — so using it would reference something that doesn’t exist, and JavaScript throws an error to prevent undefined behavior.
+
+💣 2. It prevents inconsistent or broken object creation
+Imagine if JavaScript allowed this:
+
+class Dog extends Animal {
+constructor(name) {
+this.name = name; // ❌ Using 'this' before 'super'
+super(name);
+}
+}
+Here’s what would go wrong:
+
+this hasn’t been initialized — JavaScript wouldn’t know what object you're assigning to.
+
+If Animal (the parent) needs to set up something critical (like this.id or base logic), it’s now bypassed or done too late.
+This breaks the constructor chain — a core principle in object-oriented inheritance.
+
+⚙️ 3. The JavaScript engine design requires the parent class to control this creation
+When you use extends, the child class inherits from the parent class.
+
+The parent (like Animal) is responsible for calling super() and initializing internal slots like [[HomeObject]] and [[ThisValue]].
+
+The child constructor can't define this until the parent constructor has done it.
+
+That’s a rule enforced by the JavaScript specification (specifically in ECMAScript 2015 / ES6).
+
+🔍 In technical terms (per ES6 spec):
+"A constructor must call super() before referencing this, because the object must be constructed first by the base class constructor."
+
+🧭 Analogy (real-world example):
+Imagine you inherit a house-building business (Dog) from your parent company (Animal), but you try to decorate or live in the house (this) before the foundation is even laid by the parent.
+
+Until Animal builds the foundation (super()), there is no house (this) for you to work with — touching this early is like trying to put furniture in thin air. So the system throws an error to stop you.
+
+✅ Summary
+Reason Why it's required
+super() initializes this Without it, this is undefined
+Ensures proper inheritance chain Guarantees parent setup happens first
+Avoids bugs or broken object state Prevents using uninitialized or wrongly built objects
+JavaScript language rule Enforced by ES6 spec — not just a convention
+
+===========================================================================================================================================
+
+# I was under the impression we can only use "this" if we wrote super first , is that so?
+
+# Answer
+
+Here's the key rule:
+In a constructor, you must call super(props) before using this.
+
+Why?
+Because:
+
+1. super() calls the parent class's constructor (React.Component)
+2. Until super() runs, this isn't initialized
+
+constructor(props) {
+// ❌ this is illegal here
+this.state = {}; // ❌ Error: Must call super constructor before accessing 'this'
+
+super(props); // ✅ should be called first
+}
+
+But outside the constructor?
+✔️ You can use this safely in class fields like this:
+class HelloWorld extends React.Component {
+state = {
+message: 'Hello!',
+};
+
+handleClick = () => {
+// ✅ This is fine: we're not inside a constructor
+this.setState({ message: 'Clicked!' });
+};
+
+render() {
+return <button onClick={this.handleClick}>Click Me</button>;
+}
+}
+Class fields are initialized after super() has been implicitly called during class instantiation, so this is safe to use there.
+
+===========================================================================================================================================
+
+# why should we not directly modify the state variable in react class components
+
+# Answer
+
+❌ Direct State Mutation: this.state.count = 5; // WRONG
+✅ Correct Way: this.setState({ count: 5 });
+NEVER UPDATE YOUR STATE VARIABLES DIRECTLY, IT WONT WORK AND CREATES INCONSISTENCIES
+
+            You should not modify React state directly (such as with this.state.count = 1) because React will not detect the change and therefore will not re-render the component to reflect the updated state. React tracks state changes so it knows when to update the user interface. Direct mutation bypasses this mechanism, leaving your UI out of sync with your data
+
+             React’s design expects you to use setState() (or its modern equivalents) so it can manage and optimize the rendering process, track changes, and maintain the consistency of your app's UI and data
+
+Why You Should Not Mutate this.state Directly:
+
+1. Bypasses React's State Management
+   React uses setState() to track when and how your component should re-render. If you mutate state directly:
+
+React won’t detect the change, and
+No re-render will happen unless something else triggers it.
+
+2. Breaks React's Lifecycle
+   React batches state updates and schedules renders optimally. If you skip setState(), you:
+   Bypass that batching
+   Create unpredictable bugs when state updates happen asynchronously
+
+3. State Consistency Issues
+   If multiple state updates happen close together (especially async), React ensures they merge correctly through setState(). Direct mutation can clobber existing values or create race conditions.
+
+4. Debugging Nightmare 🔍
+   React DevTools and other tools rely on React's internal state tracking. Direct mutation makes it hard or impossible to trace bugs.
+
+===========================================================================================================================================
+
+# WHY YOUR LOG ORDER VARIES IN REACT
+
+# answer
+
+1️⃣ Asynchronous State Updates & Batching
+React doesn’t update the DOM immediately when you call setState() (class) or setCount() (hook). Instead, it:
+Batches updates
+Schedules re-renders efficiently
+Defers execution to the next event loop tick when needed
+
+🔧 Example:
+this.setState({ count: 1 });
+console.log(this.state.count); // Still old value!
+React doesn't mutate state immediately — it queues it.
+
+This means:
+
+Logs can run before the update is applied
+Component re-renders may happen later than expected
+Updates can be grouped together to avoid extra re-renders
+
+🧪 What you might observe:
+
+Child render
+Child componentDidMount
+Child render // After fetch triggers setState
+Child componentDidUpdate
+But depending on timing, it might look jumbled like:
+
+Child componentDidMount
+Child render
+Child componentDidUpdate
+Child render
+
+2️⃣ Concurrent Rendering (React 18+ with createRoot)
+React 18 introduced concurrent features like:
+Automatic batching
+Interruptible rendering
+Transitions
+
+If you use:
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+You're enabling concurrent mode by default. Here's what changes:
+
+@@@ Behaviors:
+
+1. React may pause rendering mid-way and resume later
+2. Multiple components may not complete synchronously
+3. Lifecycle logs (like render or useEffect) can appear in non-linear order
+4. Double rendering can happen in development with Strict Mode for dev-safety
+
+📦 Example of Inversion:
+Parent render
+Child render
+Parent componentDidMount
+Child componentDidMount
+Child render // from state update
+Child componentDidUpdate
+But with concurrent rendering, logs might show:
+
+Child render
+Parent render
+Child componentDidMount
+Parent componentDidMount
+Because React decouples rendering from committing. So logs reflect virtual work, not actual DOM updates.
+
+3️⃣ Console.log() Buffering & JS Engine Behavior
+Even in non-React code, console.log() isn’t always precise in output order.
+
+Reasons:
+Console might flush logs asynchronously
+If logs occur in promises, microtasks, or animation frames, order may drift
+React hooks often involve closures, which delay execution
+
+useEffect(() => {
+fetch(...).then(() => {
+console.log("✅ fetch done");
+});
+console.log("📦 useEffect ran");
+}, []);
+Expected:
+
+📦 useEffect ran
+✅ fetch done
+But you might see:
+
+✅ fetch done
+📦 useEffect ran
+Depending on:
+
+DevTools behavior
+Console implementation (browser-specific)
+If you're viewing logs in between paint/flush cycles
+
+🧠 TL;DR Summary
+Reason Description
+🧮 Asynchronous setState() State updates are queued & batched, so logs before re-render
+🧵 Concurrent Rendering Mode React may pause/resume rendering, reorder lifecycle timings
+🖨️ console.log() Buffering Log outputs may appear out-of-sync with actual execution in JS engines
+
+💡 Pro Tips to Diagnose This:
+Use a unique timestamp or counter in your logs:
+
+console.log(`[${Date.now()}] render`);
+Use Profiler in React DevTools — it shows actual render timing 🔥
+
+Wrap logs with identifiable tags:
+
+console.log("🟢 MOUNTED:", props.name);
+
+===========================================================================================================================================
+
+# Execution order in functional component
+
+Rasika: => Functional Render // Initial mount
+Rasika: => Functional ComponentDidMount // After first paint
+Rasika: => Functional Render // Triggered by setState (fetch)
+Rasika: => Functional ComponentDidUpdate // Because userInfo changed
+Rasika: => Functional ComponentWillUnmount // If unmounted (e.g. navigating away)
+
+🧠 Order Logic - for a different example with basic useState and useEffect
+Step Event Console Log
+1 First render 🔁 Functional Render
+2 JSX evaluated 🧾 Inside JSX
+3 useEffect mount runs 📦 useEffect - componentDidMount
+4 Button click → setCount 🔁 Functional Render (again)
+5 JSX evaluated again 🧾 Inside JSX
+6 useEffect detects count change 🔄 useEffect - componentDidUpdate
+7 Unmount (navigate away) ❌ useEffect Cleanup - componentWillUnmount
+
+Important Notes:
+useEffect(() => ..., []) is always called after the first render
+
+State update (setUserInfo) causes re-render, then componentDidUpdate
+
+Order may vary across multiple components because fetch is async

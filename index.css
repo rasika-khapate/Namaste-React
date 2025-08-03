@@ -31,7 +31,7 @@ li > a {
   width: 200px;
   height: 400px;
   padding: 5px;
-  margin: 3px auto;
+  margin: 16px
 }
 
 .res-card:hover {
@@ -60,4 +60,15 @@ h4 > span {
   background-color: rgb(203, 198, 198);
   margin: 3px auto;
   padding: 5px;
+}
+
+.user-card{
+  border: 1px solid gray;
+  width: 350px;
+  padding: 10px;
+}
+
+#about-us-sub-components{
+  display: flex;
+  justify-content: space-around;
 }
