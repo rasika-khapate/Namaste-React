@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CDN_URL } from "../utils/constant";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 export const Header = () => {
   const [logButtonState, setLogButtonState] = useState(true);
@@ -8,6 +9,8 @@ export const Header = () => {
   const handleLogging = () => {
     setLogButtonState(!logButtonState);
   };
+
+  const onlineStatus = useOnlineStatus();
 
   return (
     <>
@@ -17,6 +20,7 @@ export const Header = () => {
         </div>
         <div className="nav-main-div">
           <ul className="nav-items">
+            <li>Online Status : {onlineStatus ? "✅" : "🔴"}</li>
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -28,6 +32,9 @@ export const Header = () => {
             </li>
             <li>
               <Link to="#">Cart</Link>
+            </li>
+            <li>
+              <Link to="/grocery">Grocery</Link>
             </li>
             <li>
               <button onClick={handleLogging}>

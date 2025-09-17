@@ -1,60 +1,16 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-// import mockData from "../utils/mockData.json";
+import { useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import ShimmerUI from "./ShimmerUI";
-import { NAMASTEREACTSWIGGYAPI } from "../utils/constant";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const Body = () => {
-  const [listOFRestaurants, setlistOFRestaurants] = useState([]);
-  const [filteredRestaurantDisplay, setFilteredRestaurantsDisplay] = useState(
-    []
-  );
   const [searchText, setSearchText] = useState("");
-  // console.log("Restaurants ==> ", listOFRestaurants);
 
-  useEffect(() => {
-    fetchedRestaurants();
-  }, []);
+  const onlineStatus = useOnlineStatus();
 
-  const fetchedRestaurants = async () => {
-    const data = await fetch(NAMASTEREACTSWIGGYAPI);
-    const fetchedData = await data.json();
-
-    const resList =
-      fetchedData?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants;
-
-    if (Array.isArray(resList)) {
-      setlistOFRestaurants(resList);
-      setFilteredRestaurantsDisplay(resList);
-    }
-
-    // ====================================================================================================================
-
-    //   const fetchedData = await axios.get(
-    //     "https://api.allorigins.win/raw?url=https://swiggy-api-4c740.web.app/swiggy-api.json"
-    //   );
-
-    //     console.log(fetchedData);
-
-    //      const data = fetchedData.data;
-
-    // const resList =
-    //   data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-
-    // console.log("✅ Restaurant List:", resList);
-
-    // ====================================================================================================================
-
-    // const restaurantCard = fetchedData.data.cards.find(
-    //   (card) => card?.card?.id === "restaurant_grid_listing_v2"
-    // );
-
-    // const resList =
-    //   restaurantCard?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-  };
+  const { listOFRestaurants, filteredRestaurantDisplay } = useRestaurantMenu();
 
   const handleFilteredRestaurants = () => {
     const filtered = filteredRestaurantDisplay.filter(
@@ -70,7 +26,16 @@ const Body = () => {
     setFilteredRestaurantsDisplay(filteredRestaurants);
   };
 
-  console.log(searchText);
+  // console.log(searchText);
+
+  if (!onlineStatus) {
+    return (
+      <h1>
+        {" "}
+        Looks like youre Offline! Please check your internet connectivity!{" "}
+      </h1>
+    );
+  }
 
   return listOFRestaurants.length === 0 ? (
     <ShimmerUI />
@@ -116,3 +81,27 @@ const Body = () => {
 };
 
 export default Body;
+
+// ====================================================================================================================
+
+//   const fetchedData = await axios.get(
+//     "https://api.allorigins.win/raw?url=https://swiggy-api-4c740.web.app/swiggy-api.json"
+//   );
+
+//     console.log(fetchedData);
+
+//      const data = fetchedData.data;
+
+// const resList =
+//   data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+// console.log("✅ Restaurant List:", resList);
+
+// ====================================================================================================================
+
+// const restaurantCard = fetchedData.data.cards.find(
+//   (card) => card?.card?.id === "restaurant_grid_listing_v2"
+// );
+
+// const resList =
+//   restaurantCard?.card?.card?.gridElements?.infoWithStyle?.restaurants;
