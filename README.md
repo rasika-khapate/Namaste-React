@@ -27,7 +27,7 @@ const filteredList = ListOfRestaurants.filter((res) => res.avgRating);
 setListOfRestaurants(filteredList);
 };
 
-If this was the logic i had given for filter, would react still re render the UI? if yes why, if no why?
+# If this was the logic i had given for filter, would react still re render the UI? if yes why, if no why?
 
 # solution:
 
@@ -36,6 +36,26 @@ Yes — but with nuance.
 
 ✅ React will schedule a re-render because:
 setListOfRestaurants(filteredList) is called — and React’s useState <b>doesn't shallow-compare </b>the previous state and the new state values by default.
+
+
+# ((((((((((((((((((
+   
+   ✅ Visual Hierarchy
+Reference equality  →  Are they the same pointer?
+                      (React, JS ===)
+
+Shallow comparison  →  Do they have the same top-level elements/keys?
+
+Deep comparison     →  Are *all* nested contents equal?
+
+
+👉 So, when I said “React doesn’t shallow-compare arrays”, what I meant was:
+
+React does reference equality only.
+
+It does not do the element-by-element shallow comparison, nor the recursive deep comparison.
+
+# ))))))))))))))))))
 
 It only skips re-rendering if you use useMemo, useCallback, or React.memo optimizations or if the state update is skipped altogether because you didn't call setState.
 
@@ -61,6 +81,55 @@ Minimal DOM diffing happens — React may do nothing to the actual DOM
 
 Scenario Will React re-render? Will DOM change?
 setListOfRestaurants with a new array (even if contents same) ✅ Yes (because new array reference) ❌ No (because same keys, same component output)
+
+===========================================================================================================================================
+
+
+# const [count , setCount] = useState(0)
+
+// a function in which im keeping this statment
+
+setCount(1)
+setCount(1)
+setCount(1)
+setCount(1)
+setCount(1)
+
+# will this component be rerendered? if yes why? if no why?
+
+# whats the difference between the above question and this question?
+
+The key difference between your first question and the filter question comes down to how React checks whether state has changed — primitive vs. object/array reference.
+
+1️⃣ First question — setCount(1) (primitive value: number)
+count is a primitive (number), so React can directly compare the old value and the new value using ===.
+
+If the value hasn’t changed (1 === 1), React will skip re-rendering altogether.
+
+Multiple setCount(1) calls in the same sync execution are batched, and React sees:
+
+Old value → New value is same? ✅ Skip re-render.
+
+Old value → New value is different? ✅ Re-render once.
+
+2️⃣ Second question — setListOfRestaurants(filteredList) (non-primitive: array)
+Here, listOfRestaurants is an array, which is an object reference in JavaScript.
+
+Even if the contents of the array are identical, .filter() always returns a new array object ([] !== []).
+
+React doesn’t do a deep comparison(meaning it does shallow compare) of objects/arrays by default — it only compares references.
+
+New array reference? ✅ React schedules a re-render, even if the data looks the same.
+
+🔍 Why my answers were different
+First case: Possible skip if value is the same, because React compares primitive values directly.
+
+Second case: Always re-render (unless you manually prevent it), because React sees a new array reference.
+
+In short:
+
+Primitive state: React compares by value → same value = no re-render.
+Object/array state: React compares by reference → new reference = re-render.
 
 ===========================================================================================================================================
 

@@ -12,17 +12,30 @@ const RestaurantMenu = () => {
       ?.card;
   console.log(itemCards);
 
+  // This below code can be put into a CUSTOM HOOK like useRestaurantMenu() so that the code follows SINGLE RESPONSIBILITY PRINCIPLE which makes the code more modular, maintainable, resuable and testable.
+
+  // const {resId} = useParams()
+
+  // const resInfo = useRestaurantMenu(resId)
+
+  // const useRestaurantCard = () => {
+
+// const [resInfo,setResInfo] = usestate(null)
+
   // useEffect(() => {
-// fetchMenu()
+  // fetchMenu()
   // }, []);
 
   // const fetchMenu = async () => {
-  //   const data = await fetch(MENU_URL);
+  //   const data = await fetch(MENU_URL + resId);
   //   const fetchedMenuData = await data.json();
   //   console.log(fetchedMenuData);
+  //    setResInfo(fetchedMenuData)
 
+  // return resInfo
   //   // Swiggy rejecting the above api call
   // };
+  // }
 
   return (
     <>
@@ -34,8 +47,8 @@ const RestaurantMenu = () => {
         <ul>
           {itemCards.map((i) => (
             <li key={i.card?.info?.id}>
-              DISH : {i?.card?.info?.name} -- CATEGORY : {i?.card?.info?.category}{" "}
-              -- PRICE : {i?.card?.info?.price / 100}
+              DISH : {i?.card?.info?.name} -- CATEGORY :{" "}
+              {i?.card?.info?.category} -- PRICE : {i?.card?.info?.price / 100}
             </li>
           ))}
         </ul>
